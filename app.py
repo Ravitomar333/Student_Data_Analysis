@@ -65,3 +65,6 @@ def download():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# Render-compatible WSGI entry point
+application = app
