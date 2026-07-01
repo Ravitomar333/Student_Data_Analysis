@@ -31,9 +31,11 @@ def analyze(csv_path):
 
     df["Grade"] = df["Average"].apply(grade)
 
-    # Create charts folder
+    # Create folders for generated files
     chart_folder = "static/charts"
+    report_folder = "downloads"
     os.makedirs(chart_folder, exist_ok=True)
+    os.makedirs(report_folder, exist_ok=True)
 
     # Average Marks of Subjects
     subject_avg = df[subjects].mean()
@@ -95,7 +97,8 @@ def analyze(csv_path):
     plt.close()
 
     # Save Result CSV
-    df.to_csv("student_result.csv", index=False)
+    report_path = os.path.join(report_folder, "student_result.csv")
+    df.to_csv(report_path, index=False)
 
    
     summary = {
