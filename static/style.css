@@ -13,13 +13,16 @@
 ========================= */
 
 body{
-    
+    margin:0;
     color:#333;
-    padding-top:30px;
-    padding-bottom: 0PX;
+    background:linear-gradient(135deg,#eef2ff,#dbeafe,#f8fafc);
+
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
 }
-body{
-     background: linear-gradient(135deg,#eef2ff,#dbeafe,#f8fafc);
+.download-btn{
+    align-items: center;
 }
 
 /* =========================
@@ -30,8 +33,9 @@ body{
     width:100%;
     max-width:1400px;
     margin:auto;
+    flex:1;
+    margin-top: 30px;
 }
-
 /* =========================
    HEADER
 ========================= */
@@ -495,19 +499,13 @@ tbody tr:hover{
     
 } */
 .footer{
-    position:relative;
-    left:50%;
-    right:50%;
-    margin-left:-50vw;
-    margin-right:-50vw;
-    width:100vw;
-
+    width:100%;
     background:#1f2937;
     color:white;
     padding:40px 0 20px;
-    margin-top:0px;
-    
+    margin-top:auto;
 }
+
 
 
 .footer-container{

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data Analysis Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📊 Student Data Analysis Dashboard</h1>
+
+  
+<div style="text-align:center; margin-top:30px;">
+    <a href="{{ url_for('new_analysis') }}" class="download-btn">
+    🔄 Analyze New CSV
+</a>
+   
+    <br><br>
+
+</div>
+
+   
+    <!-- Search Student -->
+
+    {% if students %}
+
+    <div class="card">
+
+        <h2>Search Student</h2>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="search_name"
+                placeholder="Enter Student Name">
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+     
+        {% if search_result %}
+
+<div class="search-result">
+
+    <h3>Student Details</h3>
+
+    <p><strong>Student Name:</strong> {{ search_result["Student Name"] }}</p>
+
+    <p><strong>Math:</strong> {{ search_result["Math"] }}</p>
+
+    <p><strong>English:</strong> {{ search_result["English"] }}</p>
+
+    <p><strong>Science:</strong> {{ search_result["Science"] }}</p>
+
+    <p><strong>SST:</strong> {{ search_result["SST"] }}</p>
+
+    <p><strong>Hindi:</strong> {{ search_result["Hindi"] }}</p>
+
+    <hr>
+
+    <p><strong>Total:</strong> {{ search_result["Total"] }}</p>
+
+    <p><strong>Average:</strong> {{ search_result["Average"] }}</p>
+
+    <p><strong>Grade:</strong> {{ search_result["Grade"] }}</p>
+
+</div>
+
+{% elif request.method == "POST" %}
+
+<div class="search-result">
+    <h3>Student not found!</h3>
+</div>
+
+{% endif %}
+
+    </div>
+
+    {% endif %}
+
+    <!-- Summary -->
+
+    {% if summary %}
+
+    <div class="summary">
+
+        <div class="box">
+            <h3>Total Students</h3>
+            <p>{{ summary.total_students }}</p>
+        </div>
+
+        <div class="box">
+            <h3>Highest Average</h3>
+            <p>{{ summary.highest_average }}</p>
+        </div>
+
+        <div class="box">
+            <h3>Lowest Average</h3>
+            <p>{{ summary.lowest_average }}</p>
+        </div>
+
+        <div class="box">
+            <h3>Overall Average</h3>
+            <p>{{ summary.overall_average }}</p>
+        </div>
+
+    </div>
+
+    {% endif %}
+   
+
+    <!-- Student Table -->
+
+    {% if students %}
+
+    <div class="card">
+
+        <h2>Student Result Table</h2>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                {% for key in students[0].keys() %}
+
+                    <th>{{ key }}</th>
+
+                {% endfor %}
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for student in students %}
+
+            <tr>
+
+                {% for value in student.values() %}
+
+                    <td>{{ value }}</td>
+
+                {% endfor %}
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+         <div class="performance-container">
+
+    <div class="topper-card">
+
+        <h2>🏆 Top Performer</h2>
+
+        <h3>{{ summary.topper_name }}</h3>
+
+        <p>{{ summary.topper_percentage }}%</p>
+
+    </div>
+
+    <div class="lowest-card">
+
+        <h2>📉 Lowest Performer</h2>
+
+        <h3>{{ summary.lowest_name }}</h3>
+
+        <p>{{ summary.lowest_percentage }}%</p>
+
+    </div>
+
+</div>
+
+    {% endif %}
+
+
+    {% if students %}
+
+<div style="text-align:center; margin-top:30px;">
+
+    <a href="/download" class="download-btn">
+        ⬇ Download Report
+    </a>
+    <br><br>
+
+</div>
+
+{% endif %}
+
+    <!-- Charts -->
+
+    {% if charts %}
+
+    <div class="card">
+
+        <h2>Charts</h2>
+
+        <div class="chart-grid">
+
+            <div class="chart">
+
+                <h3>Bar Chart</h3>
+
+                <img src="{{ url_for('static', filename=charts.bar) }}" alt="Bar Chart">
+
+            </div>
+
+            <div class="chart">
+
+                <h3>Line Chart</h3>
+
+                <img src="{{ url_for('static', filename=charts.line) }}" alt="Line Chart">
+
+            </div>
+
+            <div class="chart">
+
+                <h3>Pie Chart</h3>
+
+                <img src="{{ url_for('static', filename=charts.pie) }}" alt="Pie Chart">
+
+            </div>
+
+            <div class="chart">
+
+                <h3>Student Average Chart</h3>
+
+                <img src="{{ url_for('static', filename=charts.average) }}" alt="Average Chart">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    
+
+</div>
+
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <h3>📊 Student Analysis Dashboard</h3>
+            <p>Analyze student performance with interactive reports, charts, and downloadable insights.</p>
+        </div>
+
+        <div class="footer-center">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+               
+            </ul>
+        </div>
+
+        <div class="footer-right">
+            <h4>Project Details</h4>
+            <p><strong>Developer:</strong> Ravi Kumar</p>
+            <p><strong>Technology:</strong> Python, Flask, HTML, CSS, JavaScript</p>
+            <p><strong>Version:</strong> 1.0</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="footer-bottom">
+        <p>© 2026 Student Analysis Dashboard | Designed & Developed by Ravi Kumar</p>
+    </div>
+</footer>
+
+
+</body>
+</html>
